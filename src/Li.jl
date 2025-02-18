@@ -7,5 +7,7 @@ include("visualization.jl")
 export call_ensemble
 include("simulation.jl")
 
+export parse_param_from_filename
+include("utils.jl")
 
 end # module Li
