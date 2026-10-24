@@ -195,12 +195,19 @@ function set_publication_theme!()
         ),
     )
 
+    math = _find_system_font_path("Fira Math")
+    # HACK: point MathTeXEngine's built-in math font at Fira Math because
+    # `_delimiter_element` draws `(`, `)`, `[`, `]`, … from
+    # `_default_fonts[:math]` (NewComputerModern) and ignores the font family,
+    # so even `L"\text{time (h)}"` got serif parentheses
+    # (https://forge.jesseylin.com/jylin/rien/issues/860).
+    Makie.MathTeXEngine._default_fonts[:math] = math
     return Makie.MathTeXEngine.set_texfont_family!(;
         regular = _find_system_font_path("Arial"),
         italic = _find_system_font_path("Arial"; style = "Italic"),
         bold = _find_system_font_path("Arial"; style = "Bold"),
         bolditalic = _find_system_font_path("Arial"; style = "Bold Italic"),
-        math = _find_system_font_path("Fira Math"),
+        math,
     )
 end
 
